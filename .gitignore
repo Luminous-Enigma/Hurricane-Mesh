@@ -1,0 +1,59 @@
+# ── Local machine config ──────────────────────────────────────────────
+local.properties
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ── Signing material: lives ONLY in GitHub Actions secrets ────────────
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+keystore.properties
+signing.properties
+signing*.gradle
+signing*.gradle.kts
+**/signing/
+
+# ── Environment files and service config ──────────────────────────────
+.env
+.env.*
+*.env
+google-services.json
+GoogleService-Info.plist
+
+# ── Model files (downloaded at runtime, never committed) ──────────────
+*.litertlm
+*.tflite
+*.bin
+*.task
+*.gguf
+*.onnx
+
+# ── Map files (hosted separately, downloaded before storm season) ─────
+*.pmtiles
+*.mbtiles
+
+# ── Build outputs ─────────────────────────────────────────────────────
+build/
+**/build/
+.gradle/
+.kotlin/
+.externalNativeBuild/
+.cxx/
+captures/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+out/
+node_modules/
+
+# ── Logs and scanner reports ──────────────────────────────────────────
+*.log
+gitleaks-report*.json
+sweeps/

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security problem (private)
+    url: https://github.com/Luminous-Enigma/Hurricane-Mesh/security/advisories/new
+    about: Do NOT open a public issue for security problems. Use private reporting.
+  - name: In an emergency, call 911
+    url: https://www.ready.gov/
+    about: This app is not 911 and nobody watches these issues in real time.

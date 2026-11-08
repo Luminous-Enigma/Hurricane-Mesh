@@ -1,0 +1,43 @@
+# Runs on every pull request, including pull requests from forks.
+#
+# Safety rules (see SECURITY.md and README "Repository rules"):
+#   - Trigger is `pull_request`, NEVER `pull_request_target`. With `pull_request`,
+#     a forked pull request runs with a read-only token and no access to secrets.
+#   - This workflow references no secrets at all.
+#   - The token is read-only.
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  repo-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0          # full history, so the secret scan covers every commit
+          persist-credentials: false
+
+      - name: Workflow policy (see scripts/check_workflows.sh)
+        run: ./scripts/check_workflows.sh
+
+      - name: .gitignore covers secrets, models, maps, build outputs
+        run: ./scripts/check_gitignore.sh
+
+      - name: Secret scan over full history (gitleaks)
+        env:
+          GITLEAKS_VERSION: "8.21.2"
+          GITLEAKS_SHA256: "5bc41815076e6ed6ef8fbecc9d9b75bcae31f39029ceb55da08086315316e3ba"
+        run: |
+          curl -sSfL -o gitleaks.tgz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tgz" | sha256sum -c -
+          tar -xzf gitleaks.tgz gitleaks
+          ./gitleaks git --redact --verbose --exit-code 1 .

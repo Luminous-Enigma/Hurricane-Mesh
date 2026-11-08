@@ -1,0 +1,415 @@
+{
+  "_source": "Luminous-Enigma/twentyseven mobile/src/theme.jsx (THEMES) + soulMark.js composeSoulMark(SOUL_MARK_STARTER)",
+  "themes": {
+    "light": {
+      "sourceId": "daylight",
+      "label": "Daylight",
+      "group": "light",
+      "type": "Type 7",
+      "blurb": "Bright and plain. Pick the background, accent and bubble.",
+      "bg": "#F5F7FA",
+      "flat": "#F5F7FA",
+      "userBubble": "#0B6E99",
+      "aiBubble": "#FFFFFF",
+      "userText": "#FFFFFF",
+      "aiText": "#1A2230",
+      "input": "#EAEEF3",
+      "inputText": "#1A2230",
+      "accent": "#0B6E99",
+      "green": "#1E7B4D",
+      "orange": "#A35A00",
+      "red": "#B42336",
+      "muted": "#566172",
+      "panel": "#FFFFFF",
+      "raised": "#EDF1F5",
+      "hair": "#DCE2E9",
+      "onAccent": "#FFFFFF",
+      "backgrounds": [
+        [
+          "Soft white",
+          "#F5F7FA",
+          {
+            "panel": "#FFFFFF",
+            "raised": "#EDF1F5",
+            "hair": "#DCE2E9",
+            "input": "#EAEEF3",
+            "aiBubble": "#FFFFFF"
+          }
+        ],
+        [
+          "White",
+          "#FFFFFF",
+          {
+            "panel": "#F6F6F8",
+            "raised": "#ECECF0",
+            "hair": "#E2E2E7",
+            "input": "#ECECF0",
+            "aiBubble": "#F2F2F5"
+          }
+        ],
+        [
+          "Warm white",
+          "#FAF7F0",
+          {
+            "panel": "#FFFFFF",
+            "raised": "#F0EBE0",
+            "hair": "#E3DCCD",
+            "input": "#EEE8DC",
+            "aiBubble": "#FFFFFF"
+          }
+        ],
+        [
+          "Cool grey",
+          "#ECEFF3",
+          {
+            "panel": "#FFFFFF",
+            "raised": "#E1E6EC",
+            "hair": "#D2D9E1",
+            "input": "#DFE4EA",
+            "aiBubble": "#FFFFFF"
+          }
+        ]
+      ],
+      "accents": [
+        [
+          "Teal",
+          "#0B6E99"
+        ],
+        [
+          "Black",
+          "#111111"
+        ],
+        [
+          "Gold",
+          "#7A5C00"
+        ],
+        [
+          "Blue",
+          "#1D4ED8"
+        ],
+        [
+          "Red",
+          "#B42318"
+        ],
+        [
+          "Green",
+          "#1E6B45"
+        ],
+        [
+          "Purple",
+          "#6D28D9"
+        ],
+        [
+          "Orange",
+          "#A34A06"
+        ],
+        [
+          "Pink",
+          "#BE185D"
+        ],
+        [
+          "Slate",
+          "#334155"
+        ]
+      ],
+      "bubbles": [
+        [
+          "Same as accent",
+          "accent"
+        ],
+        [
+          "Black",
+          "#111111"
+        ],
+        [
+          "Navy",
+          "#1E3A8A"
+        ],
+        [
+          "Deep red",
+          "#9F1239"
+        ],
+        [
+          "Forest",
+          "#166534"
+        ],
+        [
+          "Purple",
+          "#5B21B6"
+        ],
+        [
+          "Brown",
+          "#7C4A1E"
+        ],
+        [
+          "Grey",
+          "#4B5563"
+        ],
+        [
+          "Light blue",
+          "#DBEAFE"
+        ],
+        [
+          "Mint",
+          "#D1FAE5"
+        ],
+        [
+          "Lavender",
+          "#EDE9FE"
+        ],
+        [
+          "Peach",
+          "#FFE4D6"
+        ],
+        [
+          "Butter",
+          "#FEF3C7"
+        ],
+        [
+          "Pale grey",
+          "#E5E7EB"
+        ]
+      ],
+      "texts": [
+        [
+          "White",
+          "#FFFFFF"
+        ],
+        [
+          "Black",
+          "#111111"
+        ],
+        [
+          "Cream",
+          "#FFF7E0"
+        ],
+        [
+          "Dark grey",
+          "#374151"
+        ],
+        [
+          "Yellow",
+          "#FFE066"
+        ],
+        [
+          "Navy",
+          "#1E3A8A"
+        ]
+      ]
+    },
+    "night": {
+      "sourceId": "night",
+      "label": "Night",
+      "group": "dark",
+      "type": "Type 8",
+      "blurb": "True black. No blue. Pick the accent and bubble.",
+      "bg": "#000000",
+      "flat": "#000000",
+      "userBubble": "#2C2C2E",
+      "aiBubble": "#1C1C1E",
+      "userText": "#FFFFFF",
+      "aiText": "#FFFFFF",
+      "input": "#1C1C1E",
+      "inputText": "#FFFFFF",
+      "accent": "#FF3B30",
+      "green": "#30D158",
+      "orange": "#FF9F0A",
+      "red": "#FF453A",
+      "muted": "#8E8E93",
+      "panel": "#111111",
+      "raised": "#1C1C1E",
+      "hair": "#2C2C2E",
+      "onAccent": "#FFFFFF",
+      "accents": [
+        [
+          "Red",
+          "#FF3B30",
+          "#D70015"
+        ],
+        [
+          "Yellow",
+          "#FFD60A"
+        ],
+        [
+          "Green",
+          "#30D158"
+        ],
+        [
+          "Blue",
+          "#0A84FF"
+        ],
+        [
+          "Orange",
+          "#FF9F0A"
+        ],
+        [
+          "Pink",
+          "#FF375F"
+        ],
+        [
+          "Purple",
+          "#BF5AF2"
+        ],
+        [
+          "Teal",
+          "#40C8E0"
+        ],
+        [
+          "Gold",
+          "#E6B800"
+        ],
+        [
+          "White",
+          "#F2F2F7"
+        ]
+      ],
+      "bubbles": [
+        [
+          "Dark grey",
+          "#2C2C2E"
+        ],
+        [
+          "Charcoal",
+          "#3A3A3C"
+        ],
+        [
+          "Deep red",
+          "#7A1C1C"
+        ],
+        [
+          "Deep blue",
+          "#1C3A7A"
+        ],
+        [
+          "Deep green",
+          "#1E5631"
+        ],
+        [
+          "Deep purple",
+          "#4B2A7A"
+        ],
+        [
+          "Maroon",
+          "#5C1A1A"
+        ],
+        [
+          "Deep teal",
+          "#0F4C5C"
+        ],
+        [
+          "Burnt orange",
+          "#7A3A10"
+        ],
+        [
+          "Plum",
+          "#5A1E4A"
+        ],
+        [
+          "Light grey",
+          "#D1D1D6"
+        ],
+        [
+          "Pale red",
+          "#FFD1CC"
+        ],
+        [
+          "Pale yellow",
+          "#FFF1B8"
+        ],
+        [
+          "Pale blue",
+          "#CFE3FF"
+        ],
+        [
+          "Pale green",
+          "#CDEFD6"
+        ]
+      ],
+      "texts": [
+        [
+          "White",
+          "#FFFFFF"
+        ],
+        [
+          "Black",
+          "#111111"
+        ],
+        [
+          "Light grey",
+          "#D1D1D6"
+        ],
+        [
+          "Yellow",
+          "#FFE066"
+        ],
+        [
+          "Pale blue",
+          "#CFE3FF"
+        ],
+        [
+          "Pale pink",
+          "#FFD1DC"
+        ]
+      ]
+    },
+    "neon": {
+      "sourceId": "neon-deep",
+      "label": "Neon Deep",
+      "group": "male",
+      "type": "Type 1",
+      "blurb": "Dark blue to black, neon text.",
+      "bg": "linear-gradient(180deg,#0E1A2E 0%,#070B14 100%)",
+      "flat": "#070B14",
+      "userBubble": "#1C2536",
+      "aiBubble": "#101724",
+      "userText": "#FFFFFF",
+      "aiText": "#E8F4FF",
+      "input": "#161E2C",
+      "inputText": "#FFFFFF",
+      "accent": "#00E5FF",
+      "green": "#39FF88",
+      "orange": "#FFB020",
+      "red": "#FF4D6A",
+      "muted": "#7E93AD",
+      "panel": "#0C1320",
+      "raised": "#131C2C",
+      "hair": "#1E2A3D",
+      "onAccent": "#0B0E14"
+    },
+    "soulmark": {
+      "sourceId": "soulmark",
+      "label": "Soul Mark",
+      "group": "custom",
+      "type": "Type 9",
+      "custom": true,
+      "blurb": "Your own colours, always readable.",
+      "bg": "#FDF2F7",
+      "flat": "#FDF2F7",
+      "panel": "#F7ECF1",
+      "raised": "#F1E6EB",
+      "hair": "#D9CFD4",
+      "input": "#EBE1E5",
+      "inputText": "#1A1712",
+      "ink": "#1A1712",
+      "muted": "#6F6968",
+      "aiBubble": "#E5DBE0",
+      "aiText": "#1A1712",
+      "accent": "#8B38BD",
+      "accentFill": "#A259CE",
+      "onAccent": "#0B0B0C",
+      "userBubble": "#A259CE",
+      "userText": "#0B0B0C",
+      "green": "#1E7B4D",
+      "orange": "#A35A00",
+      "red": "#B42336",
+      "textFade": 0.941
+    }
+  },
+  "soulMarkStarterSeeds": {
+    "background": "#FDF2F7",
+    "accent": "#9B4DCA",
+    "tint": 0.5,
+    "character": "soft",
+    "guard": true
+  }
+}
