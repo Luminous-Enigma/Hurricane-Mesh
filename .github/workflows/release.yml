@@ -1,0 +1,67 @@
+# Signed release build.
+#
+#   - Runs ONLY when the owner starts it by hand (workflow_dispatch).
+#   - Refuses to run unless it was started from the main branch.
+#   - Uses the `release` environment, so its secrets are only handed out to this job,
+#     and the environment can require the owner's approval before it starts.
+#   - Never triggered by pull requests, so forked pull requests can never reach these secrets.
+#
+# Secrets (set in GitHub: Settings > Environments > release > Environment secrets):
+#   RELEASE_KEYSTORE_BASE64    base64 of the upload keystore (.jks)
+#   RELEASE_KEYSTORE_PASSWORD
+#   RELEASE_KEY_ALIAS
+#   RELEASE_KEY_PASSWORD
+name: release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  signed-release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: release
+    timeout-minutes: 45
+    steps:
+      - name: Refuse anything but main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Release signing only runs from main (got ${GITHUB_REF})." >&2
+          exit 1
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Android project present?
+        run: |
+          if [ ! -x ./gradlew ]; then
+            echo "STUB: no Android project yet (arrives in M1). Nothing to sign." >&2
+            exit 1
+          fi
+
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Write keystore from secret (temporary, outside the repo)
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+        run: |
+          echo "$RELEASE_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          echo "RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
+      - name: Build signed release
+        env:
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Remove keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.jks"
