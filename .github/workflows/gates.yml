@@ -25,11 +25,9 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0            # full history for the secret scan and identity check
+          fetch-depth: 0            # every branch and tag, full history (secret scan, identity check)
           submodules: recursive     # GP0 fails if a submodule isn't checked out
           persist-credentials: false
-      - name: Fetch all branches
-        run: git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
       - name: Install gitleaks (checksum verified)
         run: |
           mkdir -p "$RUNNER_TEMP/bin"
