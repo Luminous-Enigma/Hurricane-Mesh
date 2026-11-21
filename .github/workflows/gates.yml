@@ -1,0 +1,61 @@
+name: gates
+
+# Going Public item 5: pull_request (never pull_request_target).
+# Fork PRs run with a read-only token and no access to repository secrets.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: gates-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      GITLEAKS_VERSION: 8.30.1
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0            # every branch and tag, full history (secret scan, identity check)
+          submodules: recursive     # GP0 fails if a submodule isn't checked out
+          persist-credentials: false
+      - name: Install gitleaks (checksum verified)
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -sSfL -o "$RUNNER_TEMP/gitleaks.tgz" \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  $RUNNER_TEMP/gitleaks.tgz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/gitleaks.tgz" -C "$RUNNER_TEMP/bin" gitleaks
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Install zizmor, PyYAML and jsonschema (hash pinned)
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet --require-hashes --no-deps -r scripts/requirements-gates.txt
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+      - name: Prove every gate catches its planted failures and passes its look-alikes
+        run: REQUIRE_TOOLS=1 bash scripts/test-gates.sh
+      - name: Tamper guard (main's tests against this pull request's gates)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git show "origin/${BASE_REF}:scripts/test-gates.sh" > "$RUNNER_TEMP/base-test-gates.sh" || true
+          if ! grep -q 'GATES=' "$RUNNER_TEMP/base-test-gates.sh"; then
+            echo "::notice::${BASE_REF} has no tamper-capable test suite yet; this check starts once this change merges."
+            exit 0
+          fi
+          GATES="$PWD/scripts/public-gates.sh" REQUIRE_TOOLS=1 bash "$RUNNER_TEMP/base-test-gates.sh"
+      - name: Run Going Public gates
+        env:
+          GH_TOKEN: ${{ github.token }}   # zizmor's online audits (impostor commits, version comments)
+          ZIZMOR_REQUIRE_ONLINE: "1"
+        run: bash scripts/public-gates.sh
