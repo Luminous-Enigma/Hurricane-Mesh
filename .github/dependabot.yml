@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    # Wait 7 days before adopting a new release, so a bad or malicious release
+    # has time to be caught by others first (zizmor's dependabot-cooldown audit).
+    cooldown:
+      default-days: 7
+  - package-ecosystem: pip
+    directory: /scripts
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
